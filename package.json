@@ -3,6 +3,14 @@
     "version": "0.0.1",
     "description": "",
     "main": "./dist/app.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TsingtaoJS/template.git"
+    },
+    "bugs": {
+        "url": "https://github.com/TsingtaoJS/template/issues"
+    },
+    "homepage": "https://github.com/TsingtaoJS/template#readme",
     "scripts": {
         "build": "tsc -p tsconfig.json&&docker-compose build",
         "dev": "docker-compose up -d",
