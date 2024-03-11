@@ -1,0 +1,26 @@
+{
+    "name": "@tsingtao/template",
+    "version": "0.0.1",
+    "description": "",
+    "main": "./dist/app.js",
+    "scripts": {
+        "build": "tsc -p tsconfig.json&&docker-compose build",
+        "dev": "docker-compose up -d",
+        "debug": "docker-compose up"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@tsingtao/websocket": "^0.0.1",
+        "lodash": "^4.17.21",
+        "moment": "^2.30.1",
+        "mongoose": "^8.2.1",
+        "tsingtao": "^0.0.1"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.202",
+        "@types/moment": "^2.13.0",
+        "@types/node": "^20.11.25"
+    }
+}

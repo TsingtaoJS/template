@@ -1,0 +1,51 @@
+version: '3'
+services:
+    redis:
+        image: redis:5.0.4
+        container_name: redis-master
+        command: redis-server /etc/redis.conf
+        volumes:
+            - './volumes/data/redis:/data'
+            - './volumes/logs:/var/log/redis'
+            - './volumes/config/redis.conf:/etc/redis.conf'
+
+    mongodb:
+        image: mongo:latest
+        container_name: mongo-master
+        volumes:
+            - './volumes/data/mongodb:/data/db'
+            - './volumes/config:/data/configdb'
+
+    monitor:
+        image: monitor
+        build:
+            context: .
+            dockerfile: ./src/apps/servers/monitor/Dockerfile
+        depends_on:
+            - mongodb
+            - redis
+        volumes:
+            - './volumes/logs:/tsingtao/logs'
+        environment:
+            NODE_ENV: production
+            TSINGTAO_MASTER: redis://redis-master:6379/1
+            MONGO_URI: mongodb://mongo-master:27017/gamedb
+            REDIS_URI: redis://redis-master:6379
+
+    gateway:
+        image: gateway
+        build:
+            context: .
+            dockerfile: ./src/apps/servers/gateway/Dockerfile
+        depends_on:
+            - mongodb
+            - redis
+        volumes:
+            - './volumes/logs:/tsingtao/logs'
+        environment:
+            NODE_ENV: production
+            TSINGTAO_MASTER: redis://redis-master:6379/1
+            MONGO_URI: mongodb://mongo-master:27017/gamedb
+            REDIS_URI: redis://redis-master:6379
+        ports:
+            - 10081:10081
